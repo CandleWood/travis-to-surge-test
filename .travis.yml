@@ -14,6 +14,7 @@ after_success:
 after_failure:
   - test $TRAVIS_PULL_REQUEST && ./.travis/pr_status.sh failure "Website failed to build" "https://github.com/repos/$GITHUB_REPO/pull/$TRAVIS_PULL_REQUEST"
 env:
-  - GITHUB_USER=allejo
-  - GITHUB_REPO=allejo/travis-to-surge-test
-  - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
+  global:
+    - GITHUB_USER=allejo
+    - GITHUB_REPO=allejo/travis-to-surge-test
+    - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
