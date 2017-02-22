@@ -18,3 +18,5 @@ env:
     - GITHUB_USER=allejo
     - GITHUB_REPO=allejo/travis-to-surge-test
     - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
+notifications:
+  email: false
