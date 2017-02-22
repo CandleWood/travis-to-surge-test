@@ -8,7 +8,7 @@ before_install:
   - rvm install 2.3.3
 
 script:
-  - bash .travis/build.sh
+  - ./.travis/build.sh
 after_success:
   - test $TRAVIS_PULL_REQUEST && ./.travis/surge-deploy.sh
 after_failure:
