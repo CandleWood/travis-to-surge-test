@@ -1,0 +1,16 @@
+sudo: false
+language: ruby
+
+cache:
+  bundler: true
+
+before_install:
+  - rvm install 2.3.3
+
+script:
+  - bash .travis/build.sh
+after_success:
+  - test $TRAVIS_PULL_REQUEST && ./.travis/surge-deploy.sh
+env:
+  global:
+    - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
