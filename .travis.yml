@@ -11,6 +11,9 @@ script:
   - bash .travis/build.sh
 after_success:
   - test $TRAVIS_PULL_REQUEST && ./.travis/surge-deploy.sh
+after_failure:
+  - test $TRAVIS_PULL_REQUEST && ./.travis/pr_status.sh failure "Website failed to build" "https://github.com/repos/$GITHUB_REPO/pull/$TRAVIS_PULL_REQUEST"
 env:
-  global:
-    - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
+  - GITHUB_USER=allejo
+  - GITHUB_REPO=allejo/travis-to-surge-test
+  - NOKOGIRI_USE_SYSTEM_LIBRARIES=true

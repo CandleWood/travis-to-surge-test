@@ -1,9 +1,12 @@
 #!/bin/bash
 
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
 URL="https://allejo-surge_test-$TRAVIS_PULL_REQUEST.surge.sh"
-
-npm install -g surge
-
+if [ ! -f /usr/local/bin/surge ]; then npm install -g surge; fi
 surge --project ./_site --domain "$URL"
+SURGE_STATUS=$?
+STATUS=$([ $SURGE_STATUS -eq 0 ] && echo "success" || echo "error")
+DESC=$([ $SURGE_STATUS -eq 0 ] && echo "Staging website deployed successfully" || echo "Staging website deployed failed")
 
-curl -u allejo:$GITHUB_PR_TOKEN --data "{\"state\":\"success\",\"target_url\":\"$URL\",\"description\":\"See a website preview\",\"context\":\"surge.sh/deploy\"}" "https://api.github.com/repos/allejo/travis-to-surge-test/statuses/$TRAVIS_PULL_REQUEST_SHA"
+bash $DIR/pr_status.sh $STATUS $DESC $URL
