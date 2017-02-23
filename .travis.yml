@@ -5,18 +5,23 @@ cache:
   bundler: true
 
 before_install:
+  - test $TRAVIS_PULL_REQUEST && ./.travis/pr_status pending "Waiting for website to build"
   - rvm install 2.3.3
 
 script:
-  - ./.travis/build.sh
+  - ./.travis/build
+
 after_success:
-  - test $TRAVIS_PULL_REQUEST && ./.travis/surge-deploy.sh
+  - test $TRAVIS_PULL_REQUEST && ./.travis/pr_deploy
+
 after_failure:
-  - test $TRAVIS_PULL_REQUEST && ./.travis/pr_status.sh failure "Website failed to build" "https://github.com/repos/$GITHUB_REPO/pull/$TRAVIS_PULL_REQUEST"
+  - test $TRAVIS_PULL_REQUEST && ./.travis/pr_status error "Website was not build successfully"
+
 env:
   global:
+    - GITHUB_AUTH_USER=allejo
     - GITHUB_USER=allejo
-    - GITHUB_REPO=allejo/travis-to-surge-test
+    - GITHUB_REPO=travis-to-surge-test
     - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
 notifications:
   email: false
