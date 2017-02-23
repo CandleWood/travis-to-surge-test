@@ -5,10 +5,12 @@ DESC=$2
 URL=$3
 
 data="{\"state\":\"$STATUS\","
-if [ -z "$3" ]
+if [ -z "$URL" ]
 then
     data="$data\"target_url\":\"$URL\","
 fi
 data="$data\"description\":\"$DESC\",\"context\":\"surge.sh/staging\"}"
+
+echo $data
 
 curl -u $GITHUB_AUTH_USER:$GITHUB_PR_TOKEN --data $data "https://api.github.com/repos/$GITHUB_USER/$GITHUB_REPO/statuses/$TRAVIS_PULL_REQUEST_SHA"
