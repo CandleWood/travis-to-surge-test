@@ -15,7 +15,7 @@ after_success:
   - test $TRAVIS_PULL_REQUEST && ./.travis/pr_deploy
 
 after_failure:
-  - test $TRAVIS_PULL_REQUEST && ./.travis/pr_status error "Website was not build successfully"
+  - test $TRAVIS_PULL_REQUEST && ./.travis/pr_status error "Website failed to build"
 
 env:
   global:
