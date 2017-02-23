@@ -5,7 +5,7 @@ DESC=$2
 URL=$3
 
 data="{\"state\":\"$STATUS\","
-if [ -z "$URL" ]
+if [ ! -z "$URL" ]
 then
     data="$data\"target_url\":\"$URL\","
 fi
