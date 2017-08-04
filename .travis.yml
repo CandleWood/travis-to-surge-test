@@ -20,7 +20,7 @@ after_failure:
 env:
   global:
     - GITHUB_AUTH_USER=allejo
-    - GITHUB_USER=allejo
+    - GITHUB_USER=allejo-experiments
     - GITHUB_REPO=travis-to-surge-test
     - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
 notifications:
