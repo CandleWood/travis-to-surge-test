@@ -1,0 +1,27 @@
+sudo: false
+language: ruby
+
+cache:
+  bundler: true
+
+before_install:
+  - test $TRAVIS_PULL_REQUEST && ./.travis/pr_status pending "Waiting for website to build"
+  - rvm install 2.3.3
+
+script:
+  - ./.travis/build
+
+after_success:
+  - test $TRAVIS_PULL_REQUEST && ./.travis/pr_deploy
+
+after_failure:
+  - test $TRAVIS_PULL_REQUEST && ./.travis/pr_status error "Website failed to build"
+
+env:
+  global:
+    - GITHUB_AUTH_USER=allejo
+    - GITHUB_USER=allejo-experiments
+    - GITHUB_REPO=travis-to-surge-test
+    - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
+notifications:
+  email: false
